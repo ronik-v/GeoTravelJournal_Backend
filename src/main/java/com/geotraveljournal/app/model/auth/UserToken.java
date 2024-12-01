@@ -15,14 +15,21 @@ public class UserToken {
     @Column(name = "token", nullable = false, length = 255)
     private String token;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "userId", nullable = false)
     private Long userId;
 
-    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "createdAt", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Instant createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updatedAt")
     private Instant updatedAt;
+
+    public UserToken(String token, Long userId) {
+        this.token = token;
+        this.userId = userId;
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
 
     public Long getId() {
         return id;

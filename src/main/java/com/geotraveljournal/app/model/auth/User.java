@@ -18,12 +18,23 @@ public class User {
     @Column(name = "email", nullable = false, length = 200)
     private String email;
 
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "password", nullable = false, length = 255)
+    private String password;
+
     @NotNull
     @Column(name = "createdAt", nullable = false, updatable = false)
     private Instant createdAt;
 
     @Column(name = "updatedAt")
     private Instant updatedAt;
+
+    public User(String email) {
+        this.email = email;
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
 
     public Long getId() {
         return id;
@@ -55,5 +66,13 @@ public class User {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
