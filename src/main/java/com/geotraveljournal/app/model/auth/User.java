@@ -1,4 +1,4 @@
-package com.geotraveljournal.app.model;
+package com.geotraveljournal.app.model.auth;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -19,10 +19,10 @@ public class User {
     private String email;
 
     @NotNull
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "createdAt", nullable = false, updatable = false)
     private Instant createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updatedAt")
     private Instant updatedAt;
 
     public Long getId() {

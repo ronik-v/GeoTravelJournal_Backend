@@ -1,4 +1,4 @@
-package com.geotraveljournal.app.model;
+package com.geotraveljournal.app.model.auth;
 
 import jakarta.persistence.*;
 
