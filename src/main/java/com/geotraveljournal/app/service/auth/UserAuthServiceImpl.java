@@ -5,6 +5,7 @@ import com.geotraveljournal.app.dao.auth.UserTokenDao;
 import com.geotraveljournal.app.dto.auth.UserDto;
 import com.geotraveljournal.app.model.auth.User;
 import com.geotraveljournal.app.model.auth.UserToken;
+import com.geotraveljournal.app.utils.UserPassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,13 @@ public class UserAuthServiceImpl implements UserAuthService {
     private UserTokenDao userTokenDao;
 
     @Override
-    public UserDto add(String email) {
+    public UserDto add(String email, String password) {
         if (userDao.getByEmail(email) != null) {
             throw new RuntimeException("User with email " + email + " already exists.");
         }
 
-        User user = new User(email);
+        UserPassword userPassword = new UserPassword(password, "TODO");
+        User user = new User(email, userPassword.hashed());
         user = userDao.save(user);
 
         String token = UUID.randomUUID().toString();
@@ -35,11 +37,18 @@ public class UserAuthServiceImpl implements UserAuthService {
     }
 
     @Override
-    public UserDto getByEmail(String email) {
+    public UserDto getByEmail(String email, String password) {
+        UserPassword userPassword = new UserPassword(password, "TODO");
         User user = userDao.getByEmail(email);
+
         if (user == null) {
             throw new RuntimeException("User with email " + email + " not found.");
         }
+
+        if (!userPassword.isValid(user.getPassword())) {
+            throw new RuntimeException("Wrong user password");
+        }
+
         UserToken userToken = userTokenDao.getCurrentUserToken(user.getId());
 
         return new UserDto(user.getId(), user.getEmail(), userToken.getToken(), user.getCreatedAt());

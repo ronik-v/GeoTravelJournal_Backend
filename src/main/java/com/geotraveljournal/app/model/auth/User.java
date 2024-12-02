@@ -30,8 +30,9 @@ public class User {
     @Column(name = "updatedAt")
     private Instant updatedAt;
 
-    public User(String email) {
+    public User(String email, String password) {
         this.email = email;
+        this.password = password;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
     }
