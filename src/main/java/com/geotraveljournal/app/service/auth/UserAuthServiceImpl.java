@@ -3,6 +3,8 @@ package com.geotraveljournal.app.service.auth;
 import com.geotraveljournal.app.dao.auth.UserDao;
 import com.geotraveljournal.app.dao.auth.UserTokenDao;
 import com.geotraveljournal.app.dto.auth.UserDto;
+import com.geotraveljournal.app.errors.core.CustomException;
+import com.geotraveljournal.app.errors.core.messages.Auth;
 import com.geotraveljournal.app.model.auth.User;
 import com.geotraveljournal.app.model.auth.UserToken;
 import com.geotraveljournal.app.utils.UserPassword;
@@ -22,7 +24,7 @@ public class UserAuthServiceImpl implements UserAuthService {
     @Override
     public UserDto add(String email, String password) {
         if (userDao.getByEmail(email) != null) {
-            throw new RuntimeException("User with email " + email + " already exists.");
+            throw new CustomException(false, Auth.userIsNotExists);
         }
 
         UserPassword userPassword = new UserPassword(password, "TODO");
@@ -42,11 +44,11 @@ public class UserAuthServiceImpl implements UserAuthService {
         User user = userDao.getByEmail(email);
 
         if (user == null) {
-            throw new RuntimeException("User with email " + email + " not found.");
+            throw new CustomException(false, Auth.userIsNotExists);
         }
 
         if (!userPassword.isValid(user.getPassword())) {
-            throw new RuntimeException("Wrong user password");
+            throw new CustomException(false, Auth.passwordIsNotValid);
         }
 
         UserToken userToken = userTokenDao.getCurrentUserToken(user.getId());
