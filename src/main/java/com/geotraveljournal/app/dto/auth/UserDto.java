@@ -32,7 +32,7 @@ public class UserDto {
     }
 
     public Instant getCreatedAt() {
-        return createdAt;
+        return this.createdAt;
     }
 
     public void setCreatedAt(Instant createdAt) {
@@ -40,6 +40,6 @@ public class UserDto {
     }
 
     public String getToken() {
-        return token;
+        return this.token;
     }
 }

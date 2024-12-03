@@ -8,6 +8,7 @@ import com.geotraveljournal.app.errors.core.messages.Auth;
 import com.geotraveljournal.app.model.auth.User;
 import com.geotraveljournal.app.model.auth.UserToken;
 import com.geotraveljournal.app.utils.UserPassword;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class UserAuthServiceImpl implements UserAuthService {
     @Autowired
     private UserTokenDao userTokenDao;
 
+    @Transactional
     @Override
     public UserDto add(String email, String password) {
         if (userDao.getByEmail(email) != null) {
@@ -38,6 +40,7 @@ public class UserAuthServiceImpl implements UserAuthService {
         return new UserDto(user.getId(), user.getEmail(), userToken.getToken(), user.getCreatedAt());
     }
 
+    @Transactional
     @Override
     public UserDto getByEmail(String email, String password) {
         UserPassword userPassword = new UserPassword(password, "TODO");

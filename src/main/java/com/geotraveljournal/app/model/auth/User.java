@@ -24,10 +24,10 @@ public class User {
     private String password;
 
     @NotNull
-    @Column(name = "createdAt", nullable = false, updatable = false)
+    @Column(name = "createdat", nullable = false, updatable = false)
     private Instant createdAt;
 
-    @Column(name = "updatedAt")
+    @Column(name = "updatedat")
     private Instant updatedAt;
 
     public User(String email, String password) {
@@ -54,7 +54,7 @@ public class User {
     }
 
     public Instant getCreatedAt() {
-        return createdAt;
+        return this.createdAt;
     }
 
     public void setCreatedAt(Instant createdAt) {
@@ -62,7 +62,7 @@ public class User {
     }
 
     public Instant getUpdatedAt() {
-        return updatedAt;
+        return this.updatedAt;
     }
 
     public void setUpdatedAt(Instant updatedAt) {

@@ -18,10 +18,10 @@ public class UserToken {
     @Column(name = "userId", nullable = false)
     private Long userId;
 
-    @Column(name = "createdAt", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "createdat", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Instant createdAt;
 
-    @Column(name = "updatedAt")
+    @Column(name = "updatedat")
     private Instant updatedAt;
 
     public UserToken(String token, Long userId) {
@@ -56,7 +56,7 @@ public class UserToken {
     }
 
     public Instant getCreatedAt() {
-        return createdAt;
+        return this.createdAt;
     }
 
     public void setCreatedAt(Instant createdAt) {
@@ -64,7 +64,7 @@ public class UserToken {
     }
 
     public Instant getUpdatedAt() {
-        return updatedAt;
+        return this.updatedAt;
     }
 
     public void setUpdatedAt(Instant updatedAt) {
