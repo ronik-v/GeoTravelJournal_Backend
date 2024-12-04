@@ -6,7 +6,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "user_tokens")
-public class UserToken {
+public  class UserToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -15,7 +15,7 @@ public class UserToken {
     @Column(name = "token", nullable = false, length = 255)
     private String token;
 
-    @Column(name = "userId", nullable = false)
+    @Column(name = "userid", nullable = false)
     private Long userId;
 
     @Column(name = "createdat", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -23,6 +23,8 @@ public class UserToken {
 
     @Column(name = "updatedat")
     private Instant updatedAt;
+
+    public UserToken() {}
 
     public UserToken(String token, Long userId) {
         this.token = token;
