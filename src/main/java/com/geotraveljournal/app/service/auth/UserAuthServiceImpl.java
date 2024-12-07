@@ -3,11 +3,12 @@ package com.geotraveljournal.app.service.auth;
 import com.geotraveljournal.app.dao.auth.UserDao;
 import com.geotraveljournal.app.dao.auth.UserTokenDao;
 import com.geotraveljournal.app.dto.auth.UserDto;
-import com.geotraveljournal.app.errors.core.CustomException;
-import com.geotraveljournal.app.errors.core.messages.Auth;
+import com.geotraveljournal.app.responses.core.CustomException;
+import com.geotraveljournal.app.responses.core.messages.Auth;
 import com.geotraveljournal.app.model.auth.User;
 import com.geotraveljournal.app.model.auth.UserToken;
 import com.geotraveljournal.app.utils.UserPassword;
+import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,15 +22,20 @@ public class UserAuthServiceImpl implements UserAuthService {
     private UserDao userDao;
     @Autowired
     private UserTokenDao userTokenDao;
+    private final Dotenv envConfig;
+
+    public UserAuthServiceImpl() {
+        this.envConfig = Dotenv.load();
+    }
 
     @Transactional
     @Override
     public UserDto add(String email, String password) {
         if (userDao.getByEmail(email) != null) {
-            throw new CustomException(false, Auth.userIsNotExists);
+            throw new CustomException(false, Auth.thisUserIsAlreadyExists);
         }
 
-        UserPassword userPassword = new UserPassword(password, "TODO");
+        UserPassword userPassword = new UserPassword(password, envConfig.get("PASSWORD_SOLE"));
         User user = new User(email, userPassword.hashed());
         user = userDao.save(user);
 
@@ -43,7 +49,7 @@ public class UserAuthServiceImpl implements UserAuthService {
     @Transactional
     @Override
     public UserDto getByEmail(String email, String password) {
-        UserPassword userPassword = new UserPassword(password, "TODO");
+        UserPassword userPassword = new UserPassword(password, envConfig.get("PASSWORD_SOLE"));
         User user = userDao.getByEmail(email);
 
         if (user == null) {

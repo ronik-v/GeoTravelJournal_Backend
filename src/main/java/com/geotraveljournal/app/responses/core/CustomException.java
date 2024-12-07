@@ -1,4 +1,4 @@
-package com.geotraveljournal.app.errors.core;
+package com.geotraveljournal.app.responses.core;
 
 public class CustomException extends RuntimeException {
     private final boolean status;

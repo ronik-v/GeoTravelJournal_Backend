@@ -1,4 +1,4 @@
-package com.geotraveljournal.app.errors.core;
+package com.geotraveljournal.app.responses.core;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
