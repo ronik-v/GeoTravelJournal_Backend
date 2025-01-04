@@ -1,71 +1,44 @@
-package com.geotraveljournal.app.model.journal;
+package com.geotraveljournal.app.dto.journal;
 
-import com.geotraveljournal.app.utils.JsonListConverter;
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.Instant;
 import java.util.List;
 
-@Entity
-@Table(name = "journal")
-public class Journal {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+public class JournalInDto {
+    @JsonIgnore
     private Long id;
-
-    @NotNull
-    @Column(name = "title", nullable = false, length = 255)
     private String title;
-
-    @Column(name = "description", nullable = true, length = 512)
     private String description;
-
-    @NotNull
-    @Column(name = "distance", nullable = false)
     private Double distance;
-
-    @NotNull
-    @Convert(converter = JsonListConverter.class)
-    @Column(name = "route", nullable = false, columnDefinition = "TEXT")
     private List<Object> route;
-
-    @Column(name = "userid", nullable = false)
+    @JsonIgnore
     private Long userId;
-
-    @NotNull
-    @Column(name = "createdat", nullable = false, updatable = false)
+    @JsonIgnore
     private Instant createdAt;
-
-    @NotNull
-    @Column(name = "updatedat")
+    @JsonIgnore
     private Instant updatedAt;
 
-    public Journal(String title, String description, Double distance,  List<Object> route, Long userId) {
+    public JournalInDto() {
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
+    public JournalInDto(Object[] data) {
+        this.id = data[0] != null ? ((Number) data[0]).longValue() : null;
+        this.title = data[1] != null ? data[1].toString() : null;
+        this.createdAt = data[2] != null ? Instant.parse(data[2].toString()) : null;
+    }
+
+    public JournalInDto(Long id, String title, String description, Double distance, List<Object> route, Long userId, Instant createdAt, Instant updatedAt) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.distance = distance;
         this.route = route;
         this.userId = userId;
-        this.createdAt = Instant.now();
-        this.updatedAt = Instant.now();
-    }
-
-    public Journal(String title, Double distance,  List<Object> route, Long userId) {
-        this.title = title;
-        this.distance = distance;
-        this.route = route;
-        this.userId = userId;
-        this.createdAt = Instant.now();
-        this.updatedAt = Instant.now();
-    }
-
-    public Journal() {
-        this.createdAt = Instant.now();
-        this.updatedAt = Instant.now();
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -120,7 +93,15 @@ public class Journal {
         return createdAt;
     }
 
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public Instant getUpdatedAt() {
         return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

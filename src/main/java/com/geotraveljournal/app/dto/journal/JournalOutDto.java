@@ -1,28 +1,31 @@
 package com.geotraveljournal.app.dto.journal;
 
-import java.time.Instant;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class JournalDto {
+import java.time.Instant;
+import java.util.List;
+
+public class JournalOutDto {
     private Long id;
     private String title;
     private String description;
     private Double distance;
-    private Map<String, Object> route;
+    private List<Object> route;
+    @JsonIgnore
     private Long userId;
     private Instant createdAt;
     private Instant updatedAt;
 
-    public JournalDto() {
+    public JournalOutDto() {
     }
 
-    public JournalDto(Object[] data) {
+    public JournalOutDto(Object[] data) {
         this.id = data[0] != null ? ((Number) data[0]).longValue() : null;
         this.title = data[1] != null ? data[1].toString() : null;
         this.createdAt = data[2] != null ? Instant.parse(data[2].toString()) : null;
     }
 
-    public JournalDto(Long id, String title, String description, Double distance, Map<String, Object> route, Long userId, Instant createdAt, Instant updatedAt) {
+    public JournalOutDto(Long id, String title, String description, Double distance, List<Object> route, Long userId, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -65,11 +68,11 @@ public class JournalDto {
         this.distance = distance;
     }
 
-    public Map<String, Object> getRoute() {
+    public List<Object> getRoute() {
         return route;
     }
 
-    public void setRoute(Map<String, Object> route) {
+    public void setRoute(List<Object> route) {
         this.route = route;
     }
 

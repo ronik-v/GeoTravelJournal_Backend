@@ -1,7 +1,9 @@
 package com.geotraveljournal.app.dao.journal;
 
-import com.geotraveljournal.app.dto.journal.JournalDto;
+import com.geotraveljournal.app.dto.journal.JournalOutDto;
+import com.geotraveljournal.app.dto.journal.JournalOutPreviewDto;
 import com.geotraveljournal.app.model.journal.Journal;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,7 +19,10 @@ public interface JournalDao extends JpaRepository<Journal, Long> {
     @Query("SELECT jl FROM Journal jl WHERE jl.id = :id")
     Optional<Journal> getDetail(@Param("id") Long id);
 
-    @Query("SELECT new com.geotraveljournal.app.dto.journal.JournalDto(jl.id, jl.title, jl.createdAt) " +
+    @Query("SELECT new com.geotraveljournal.app.dto.journal.JournalOutPreviewDto(jl.id, jl.title, jl.createdAt) " +
             "FROM Journal jl WHERE jl.userId = :userId")
-    List<JournalDto> getUserHistory(@Param("userId") Long userId, Pageable pageable);
+    List<JournalOutPreviewDto> getUserHistory(@Param("userId") Long userId, Pageable pageable);
+
+    @Query("DELETE FROM Journal jl WHERE jl.userId = :userId")
+    void clearHistory(@Param("userId") Long userId);
 }

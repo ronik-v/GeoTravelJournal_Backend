@@ -4,7 +4,7 @@ import com.geotraveljournal.app.dao.auth.UserDao;
 import com.geotraveljournal.app.dao.auth.UserTokenDao;
 import com.geotraveljournal.app.dto.auth.UserDto;
 import com.geotraveljournal.app.responses.core.CustomException;
-import com.geotraveljournal.app.responses.core.messages.Auth;
+import com.geotraveljournal.app.responses.core.messages.AuthErrors;
 import com.geotraveljournal.app.model.auth.User;
 import com.geotraveljournal.app.model.auth.UserToken;
 import com.geotraveljournal.app.utils.UserPassword;
@@ -32,7 +32,7 @@ public class UserAuthServiceImpl implements UserAuthService {
     @Override
     public UserDto add(String email, String password) {
         if (userDao.getByEmail(email) != null) {
-            throw new CustomException(false, Auth.thisUserIsAlreadyExists);
+            throw new CustomException(false, AuthErrors.thisUserIsAlreadyExists);
         }
 
         UserPassword userPassword = new UserPassword(password, envConfig.get("PASSWORD_SOLE"));
@@ -53,11 +53,11 @@ public class UserAuthServiceImpl implements UserAuthService {
         User user = userDao.getByEmail(email);
 
         if (user == null) {
-            throw new CustomException(false, Auth.userIsNotExists);
+            throw new CustomException(false, AuthErrors.userIsNotExists);
         }
 
         if (!userPassword.isValid(user.getPassword())) {
-            throw new CustomException(false, Auth.passwordIsNotValid);
+            throw new CustomException(false, AuthErrors.passwordIsNotValid);
         }
         String token = UUID.randomUUID().toString();
         userTokenDao.updateUserToken(token, user.getId());
