@@ -1,6 +1,5 @@
 package com.geotraveljournal.app.dao.journal;
 
-import com.geotraveljournal.app.dto.journal.JournalOutDto;
 import com.geotraveljournal.app.dto.journal.JournalOutPreviewDto;
 import com.geotraveljournal.app.model.journal.Journal;
 

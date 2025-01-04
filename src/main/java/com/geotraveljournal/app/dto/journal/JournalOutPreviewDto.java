@@ -1,7 +1,6 @@
 package com.geotraveljournal.app.dto.journal;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 public class JournalOutPreviewDto {
     private Long id;

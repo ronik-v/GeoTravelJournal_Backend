@@ -8,11 +8,14 @@ import com.geotraveljournal.app.model.auth.User;
 import com.geotraveljournal.app.responses.core.GoodResponse;
 import com.geotraveljournal.app.service.journal.JournalServiceImpl;
 import com.geotraveljournal.app.utils.ApiAuth;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
