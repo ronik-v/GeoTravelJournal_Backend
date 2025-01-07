@@ -22,7 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/change-route")
+@RequestMapping("/api/change-route")
 @Tag(name = "Route Controller", description = "Контроллер для выбора лучшего маршрута по погодным условиям")
 public class RouteController {
 

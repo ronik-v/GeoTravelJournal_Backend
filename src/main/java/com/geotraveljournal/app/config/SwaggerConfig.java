@@ -22,7 +22,7 @@ public class SwaggerConfig {
                                 new SecurityScheme()
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")))
-                .info(new Info().title("API").version("v1"));
+                .info(new Info().title("Geo Travel Journal API").version("v1"));
     }
 
     @Bean
