@@ -23,7 +23,8 @@ public class WeatherService {
     public WeatherDataDto getWeather(double latitude, double longitude) {
         String url = String.format(
                 "https://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&appid=%s",
-                latitude, longitude, apiKey);
+                latitude, longitude, apiKey
+        );
         return restTemplate.getForObject(url, WeatherDataDto.class);
     }
 }
