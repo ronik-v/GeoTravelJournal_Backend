@@ -18,6 +18,8 @@ public class GeoTravelJournalApplication {
 		System.setProperty("DB_USERNAME", Objects.requireNonNull(dotenv.get("DB_USERNAME")));
 		System.setProperty("DB_PASSWORD", Objects.requireNonNull(dotenv.get("DB_PASSWORD")));
 		System.setProperty("PASSWORD_SOLE", Objects.requireNonNull(dotenv.get("PASSWORD_SOLE")));
+		System.setProperty("WEATHER_TOKEN", Objects.requireNonNull(dotenv.get("WEATHER_TOKEN")));
+
 		SpringApplication.run(GeoTravelJournalApplication.class, args);
 	}
 
