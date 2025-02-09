@@ -1,6 +1,9 @@
 FROM ghcr.io/graalvm/graalvm-ce:latest
+RUN apt-get update && apt-get install -y maven
 WORKDIR /app
-COPY target/*.jar app.jar
-ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+COPY . /app
+ENV JAVA_HOME=/opt/graalvm-ce-22.3.0
+ENV PATH=$JAVA_HOME/bin:$PATH
+RUN mvn clean install
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "target/app.jar"]
