@@ -1,7 +1,7 @@
 # GeoTravelJournal_Backend
 
 ## Swagger
-http://localhost:9999/swagger-ui/index.html#/Hello%20Controller/sayHello
+http://127.0.0.1:9999/swagger-ui/index.html
 
 ## OpenWeather
     1.1 How to get weather stat
