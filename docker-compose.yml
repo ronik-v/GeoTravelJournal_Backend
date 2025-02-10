@@ -15,6 +15,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   app:
     build: .
@@ -23,16 +28,19 @@ services:
     env_file:
       - .env
     environment:
-      - DB_URL=${DB_URL}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - APP_PORT=${APP_PORT}
-      - WEATHER_TOKEN=${WEATHER_TOKEN}
-      - PASSWORD_SOLE=${PASSWORD_SOLE}
+      DB_URL: jdbc:postgresql://db:5432/${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      APP_PORT: ${APP_PORT}
+      WEATHER_TOKEN: ${WEATHER_TOKEN}
+      PASSWORD_SOLE: ${PASSWORD_SOLE}
     ports:
       - "${APP_PORT}:${APP_PORT}"
     depends_on:
       - db
+    command: >
+      sh -c "until nc -z db 5432; do echo 'Waiting for Postgres...'; sleep 2; done;
+      java -jar target/app.jar"
 
   nginx:
     image: nginx:latest
