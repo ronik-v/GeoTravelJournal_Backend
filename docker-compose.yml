@@ -38,9 +38,7 @@ services:
       - "${APP_PORT}:${APP_PORT}"
     depends_on:
       - db
-    command: >
-      sh -c "until nc -z db 5432; do echo 'Waiting for Postgres...'; sleep 2; done;
-      java -jar target/app.jar"
+    command: "java -jar /app/target/app-0.0.1-SNAPSHOT.jar"
 
   nginx:
     image: nginx:latest

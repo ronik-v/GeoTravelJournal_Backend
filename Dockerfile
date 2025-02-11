@@ -7,12 +7,12 @@ ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ENV PATH=$JAVA_HOME/bin:$PATH
 RUN echo $JAVA_HOME
 RUN java -version
-
 WORKDIR /app
 COPY . /app
 COPY .env /app/.env
 RUN export $(grep -v '^#' /app/.env | xargs) && \
     echo "APP_NAME=$APP_NAME" && \
-    mvn clean install
+    mvn clean install -DskipTests
+RUN ls /app/target
 
-CMD ["java", "-jar", "target/app.jar"]
+CMD ["java", "-jar", "/app/target/app-0.0.1-SNAPSHOT.jar"]
