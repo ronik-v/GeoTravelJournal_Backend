@@ -60,9 +60,8 @@ public class UserAuthServiceImpl implements UserAuthService {
             throw new CustomException(false, AuthErrors.passwordIsNotValid);
         }
         String token = UUID.randomUUID().toString();
-        userTokenDao.updateUserToken(token, user.getId());
-
-        UserToken userToken = userTokenDao.getCurrentUserToken(user.getId());
+        UserToken userToken = new UserToken(token, user.getId());
+        userToken = userTokenDao.save(userToken);
 
         return new UserDto(user.getId(), user.getEmail(), userToken.getToken(), user.getCreatedAt());
     }
