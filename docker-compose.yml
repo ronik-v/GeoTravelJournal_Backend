@@ -23,7 +23,6 @@ services:
 
   app:
     build: .
-    container_name: geo_travel_backend
     restart: always
     env_file:
       - .env
